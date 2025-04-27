@@ -10,7 +10,7 @@ sudo pacman-key --recv-key 3056513887B78AEB --keyserver keyserver.ubuntu.com
 sudo pacman-key --lsign-key 3056513887B78AEB
 sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-keyring.pkg.tar.zst'
 sudo pacman -U 'https://cdn-mirror.chaotic.cx/chaotic-aur/chaotic-mirrorlist.pkg.tar.zst'
-sudo bash -c '$echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.d/mirrorlist'
+sudo bash -c 'echo -e "\n[chaotic-aur]\nInclude = /etc/pacman.d/chaotic-mirrorlist" >> /etc/pacman.conf'
 echo "Chaotic-AUR added."
 
 echo "Updating systme..."
@@ -18,9 +18,16 @@ sudo pacman -Syu
 echo "System update complete."
 
 echo "Installing packages..."
-echo "Packages to be installed:"
-echo "fastfetch, neovim, fish, git, onlyoffice, github-cli, cmake, unzip, curl"
-yay -S fastfetch neovim fish onlyoffice gh git cmake unzip curl 
+echo "System packages to be installed:"
+echo "hyprland (hypr* ecosystem), uwsm, waybar, grim, slurp, wl-clipboard" 
+echo "clipse, nemo, kitty, wofi, pipewire, wireplumber"
+yay -S hyprland-meta-git uwsm waybar grim slurp wl-clipboard clipse \
+  nemo kitty wofi 
+echo "Other packages to be installed:"
+echo "fastfetch, neovim, fish, git, onlyoffice, github-cli, cmake, unzip, curl, pyprland"
+echo "python-pywal16"
+yay -S fastfetch neovim fish onlyoffice gh git cmake unzip curl python-pywal16 -y
+curl https://raw.githubusercontent.com/hyprland-community/pyprland/main/scripts/get-pypr | sh
 echo "Packages installed."
 
 echo "Configuring Git..."
@@ -33,10 +40,17 @@ git config --global init.defaultBranch main
 git config --global pull.rebase false
 echo "Git configuration complete."
 
+echo "Configuring Hyprland..."
+rm -rf ~/.config
+git clone https://github.com/BUZZKILL1549/dotfiles ~/.config
+yay -S colorthief -y
+wal -i ~/.config/hypr/wallpapers/Tranquility_1920x1080.png --backend colorthief --cols16
+echo "Hyprland configuration complete."
+
 echo "Configuring Fish..."
 sudo chsh -s $(which fish) $USER
+rm -rf ~/.config/fish
 git clone https://github.com/BUZZKILL1549/fish.git ~/.config/fish/ 
-curl -sS https://starship.rs/install.sh | sh
 fish -c "source ~/.config/fish/config.fish"
 echo "Fish configuration complete."
 
@@ -46,6 +60,7 @@ fnm use --install-if-missing v22.10.0
 echo "Node.js configuration complete."
 
 echo "Configuring Neovim..."
+rm -rf ~/.config/nvim
 git clone https://github.com/BUZZKILL1549/neovim.git ~/.config/nvim/
 echo "Neovim configuration complete."
 
