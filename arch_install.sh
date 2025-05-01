@@ -20,15 +20,15 @@ echo "System update complete."
 echo "Installing packages..."
 echo "System packages to be installed:"
 echo "hyprland (hypr* ecosystem), uwsm, waybar, grim, slurp, wl-clipboard" 
-echo "clipse, nemo, kitty, wofi, pipewire, wireplumber"
-yay -S hyprland-meta-git uwsm waybar grim slurp wl-clipboard clipse \
-  nemo kitty wofi 
-echo "Other packages to be installed:"
-echo "fastfetch, neovim, fish, git, onlyoffice, github-cli, cmake, unzip, curl, pyprland"
+echo "clipse, nemo, kitty, wofi, swaync, wlogout, pipewire, wireplumber, ttf-iosevka-nerd, ttf-hack-nerd"
+echo "fastfetch, neovim, fish, git, github-cli, cmake, unzip, curl, pyprland"
 echo "python-pywal16"
-yay -S fastfetch neovim fish onlyoffice gh git cmake unzip curl python-pywal16 -y
+yay -S hyprland-meta-git uwsm waybar grim slurp wl-clipboard clipse \
+  nemo kitty wofi ttf-iosevka-nerd swaync ttf-hack-nerd fastfetch \ 
+  neovim fish gh git cmake unzip curl wlogout python-pywal16 -y
 curl https://raw.githubusercontent.com/hyprland-community/pyprland/main/scripts/get-pypr | sh
 echo "Packages installed."
+
 
 echo "Configuring Git..."
 read -p "Enter github username: " gh_username
